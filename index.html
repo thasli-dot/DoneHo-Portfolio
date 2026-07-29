@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DoneHo — Plans that bend so you don't break</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #070B17;
+    --card: #101827;
+    --card-soft: #0b0f1c;
+    --border: #1e2740;
+    --purple: #6D5DFE;
+    --purple-light: #a79bff;
+    --blue: #6FEAFF;
+    --green: #27F2A3;
+    --amber: #FFB84D;
+    --red: #FF5C8A;
+    --text: #FFFFFF;
+    --muted: #B7C2D4;
+    --dim: #7d879c;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'Nunito', sans-serif; line-height: 1.55; }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+  /* NAV */
+  .nav { display: flex; align-items: center; justify-content: space-between; padding: 22px 0; }
+  .nav-logo { display: flex; align-items: center; gap: 9px; font-weight: 800; font-size: 16px; }
+  .orb { width: 24px; height: 24px; border-radius: 50%; background: radial-gradient(circle at 32% 28%, #fff 0%, #a5b4ff 22%, #6D5DFE 55%, #4a3fd6 100%); box-shadow: 0 0 10px rgba(109,93,254,0.7); }
+  .nav-links a { color: var(--dim); text-decoration: none; font-size: 13px; font-weight: 700; margin-left: 20px; }
+  .nav-links a:hover { color: var(--blue); }
+
+  /* HERO */
+  .hero { padding: 56px 0 36px; text-align: center; }
+  .hero-eyebrow { font-size: 12px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: var(--purple-light); }
+  .hero h1 { font-size: 42px; font-weight: 900; line-height: 1.1; margin-top: 14px; }
+  .hero .sub { font-size: 15.5px; color: var(--muted); margin-top: 14px; max-width: 520px; margin-left: auto; margin-right: auto; }
+  .hero-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 26px; }
+  .pill-link { display: inline-flex; align-items: center; gap: 6px; padding: 10px 18px; border-radius: 999px; font-size: 13px; font-weight: 800; text-decoration: none; }
+  .pill-primary { background: linear-gradient(180deg, #8a7dff, #6D5DFE); color: #fff; box-shadow: 0 8px 22px rgba(109,93,254,0.45); }
+  .pill-secondary { background: var(--card); color: var(--text); border: 1px solid var(--border); }
+  .kaggle-note { font-size: 11px; color: var(--dim); font-style: italic; margin-top: 8px; }
+  .status-strip { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 20px; font-size: 12px; color: var(--dim); }
+  .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); }
+
+  /* QUOTE */
+  .quote-block { margin: 44px 0; padding: 26px 28px; border-radius: 20px; background: linear-gradient(160deg, #6D5DFE22, var(--card) 70%); border-left: 3px solid var(--purple); }
+  .quote-block p { font-size: 17px; font-weight: 700; line-height: 1.4; }
+  .quote-block .attribution { margin-top: 10px; font-size: 11.5px; color: var(--dim); font-weight: 700; }
+
+  /* STATS */
+  .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 32px 0; }
+  .stat-card { background: var(--card); border-radius: 16px; padding: 18px 14px; text-align: center; }
+  .stat-num { font-size: 24px; font-weight: 900; color: var(--blue); }
+  .stat-label { font-size: 10.5px; color: var(--dim); font-weight: 700; margin-top: 3px; }
+
+  /* SECTION SHELL */
+  .section { margin: 48px 0; }
+  .section-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; }
+  .section-num { font-size: 12px; font-weight: 900; color: var(--purple-light); border: 1.5px solid var(--purple); border-radius: 999px; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .section-head h2 { font-size: 19px; font-weight: 800; }
+  .section-sub { padding-left: 34px; font-size: 12.5px; color: var(--dim); margin-bottom: 14px; }
+  .section-body { padding-left: 0; }
+
+  /* GENERIC POINT-CARD GRID — the main building block, replaces prose everywhere */
+  .pt-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .pt-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+  .pt-card { background: var(--card); border-radius: 14px; padding: 14px; }
+  .pt-card .pt-icon { font-size: 18px; }
+  .pt-card .pt-head { font-weight: 800; font-size: 12.5px; color: var(--text); margin-top: 7px; }
+  .pt-card .pt-body { font-size: 11.5px; color: var(--dim); margin-top: 3px; line-height: 1.35; }
+  .pt-card .pt-tag { display: inline-block; font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.3px; color: var(--purple-light); margin-top: 8px; }
+
+  /* Persona quote cards (voices-from-research style) */
+  .quote-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .quote-card { background: var(--card); border-radius: 16px; padding: 14px; }
+  .quote-card-head { display: flex; align-items: center; gap: 10px; }
+  .avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; background: radial-gradient(circle at 32% 28%, #a5b4ff 0%, #6D5DFE 60%, #4a3fd6 100%); }
+  .quote-name { font-weight: 800; font-size: 12.5px; }
+  .quote-role { font-size: 10.5px; color: var(--dim); }
+  .quote-card blockquote { font-size: 11.5px; font-style: italic; color: var(--muted); margin: 10px 0 8px; line-height: 1.4; }
+  .quote-card .pt-tag { color: var(--purple-light); font-size: 9.5px; font-weight: 800; text-transform: uppercase; }
+
+  /* Before/After */
+  .before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .ba-card { border-radius: 16px; padding: 14px; }
+  .ba-before { background: linear-gradient(160deg, #FF5C8A22, var(--card) 70%); }
+  .ba-after { background: linear-gradient(160deg, #27F2A322, var(--card) 70%); }
+  .ba-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
+  .ba-before .ba-label { color: var(--red); }
+  .ba-after .ba-label { color: var(--green); }
+  .ba-card p { font-size: 12px; color: var(--text); margin-top: 6px; }
+
+  .diagram-img { width: 100%; border-radius: 16px; margin: 14px 0 4px; box-shadow: 0 12px 40px rgba(0,0,0,0.4); border: 1px solid var(--border); }
+  .diagram-caption { font-size: 11px; color: var(--dim); text-align: center; margin-bottom: 6px; font-style: italic; }
+
+  /* Findings */
+  .finding-card { border-radius: 14px; padding: 13px; }
+  .finding-fixed { background: linear-gradient(160deg, #27F2A31a, var(--card) 70%); border-left: 3px solid var(--green); }
+  .finding-open { background: linear-gradient(160deg, #FFB84D1a, var(--card) 70%); border-left: 3px solid var(--amber); }
+  .finding-tag { font-size: 10px; font-weight: 800; text-transform: uppercase; }
+  .finding-fixed .finding-tag { color: var(--green); }
+  .finding-open .finding-tag { color: var(--amber); }
+  .finding-card p { font-size: 12px; color: var(--muted); margin-top: 5px; line-height: 1.35; }
+
+  .guardrail-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .guardrail-item { display: flex; align-items: flex-start; gap: 7px; font-size: 11.5px; color: var(--muted); background: var(--card); border-radius: 12px; padding: 10px 12px; }
+  .guardrail-item .check { color: var(--green); font-weight: 900; flex-shrink: 0; }
+
+  .file-row { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+  .file-link { display: inline-flex; align-items: center; gap: 6px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 9px 14px; font-size: 11.5px; font-weight: 700; color: var(--text); text-decoration: none; }
+
+  /* Status badge cards for feature/roadmap tables -> replaced with compact grid */
+  .badge { display: inline-flex; align-items: center; gap: 4px; font-size: 9.5px; font-weight: 800; padding: 3px 8px; border-radius: 999px; }
+  .badge-live { background: rgba(39,242,163,0.15); color: var(--green); }
+  .badge-next { background: rgba(255,184,77,0.15); color: var(--amber); }
+  .badge-future { background: rgba(111,234,255,0.15); color: var(--blue); }
+  .badge-mock { background: rgba(125,135,156,0.15); color: var(--dim); }
+
+  /* Journey */
+  .persona-banner { display: flex; align-items: center; gap: 12px; background: var(--card); border-radius: 16px; padding: 14px 16px; margin-bottom: 16px; }
+  .persona-avatar { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; background: radial-gradient(circle at 32% 28%, #a5b4ff 0%, #6D5DFE 60%, #4a3fd6 100%); box-shadow: 0 0 14px rgba(109,93,254,0.5); }
+  .persona-name { font-weight: 800; font-size: 14px; }
+  .persona-desc { font-size: 11.5px; color: var(--dim); margin-top: 2px; }
+
+  .journey-step { margin-bottom: 16px; }
+  .journey-label { font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.4px; color: var(--purple-light); margin-bottom: 7px; }
+  .journey-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  .journey-card { background: var(--card); border-radius: 12px; padding: 11px; }
+  .journey-card .jc-head { font-size: 9.5px; font-weight: 800; color: var(--dim); text-transform: uppercase; margin-bottom: 5px; }
+  .journey-card p { font-size: 11px; color: var(--muted); line-height: 1.35; }
+  .journey-card .highlight { color: var(--blue); font-weight: 700; }
+  .real-badge { display: inline-block; font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 999px; background: rgba(39,242,163,0.15); color: var(--green); margin-bottom: 5px; }
+
+  .warroom-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .warroom-card { background: var(--card); border-radius: 12px; padding: 12px; }
+  .warroom-role { font-size: 10px; font-weight: 800; color: var(--amber); text-transform: uppercase; }
+  .warroom-quote { font-size: 11px; font-style: italic; color: var(--text); margin-top: 5px; line-height: 1.35; }
+  .warroom-note { text-align: center; font-size: 11px; color: var(--dim); margin-top: 12px; font-style: italic; }
+
+  .subsection-title { font-size: 14px; font-weight: 800; margin: 22px 0 8px; color: var(--text); }
+
+  footer { text-align: center; padding: 50px 0 36px; color: var(--dim); font-size: 11.5px; }
+  footer a { color: var(--dim); }
+
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 30px; }
+    .stat-grid { grid-template-columns: 1fr 1fr; }
+    .before-after, .guardrail-grid, .journey-grid, .warroom-grid, .quote-grid, .pt-grid, .pt-grid.cols-4 { grid-template-columns: 1fr; }
+    .section-sub, .section-body { padding-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="nav">
+    <div class="nav-logo"><div class="orb"></div>DoneHo</div>
+    <div class="nav-links">
+      <a href="https://donehov2.lovable.app/" target="_blank">Try it</a>
+      <a href="https://github.com/thasli-dot/doneho-backend_v2" target="_blank">Code</a>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-eyebrow">Case Study — Kaggle Vibe Coding Agents Capstone</div>
+    <h1>Plans that bend<br>so you don't break.</h1>
+    <p class="sub">An AI-agentic weekly execution system that protects your goals when life doesn't cooperate — built solo, end to end.</p>
+    <div class="hero-links">
+      <a class="pill-link pill-primary" href="https://donehov2.lovable.app/" target="_blank">Try DoneHo →</a>
+      <a class="pill-link pill-secondary" href="https://doneho-backend-v2.onrender.com/health" target="_blank">Backend health</a>
+      <a class="pill-link pill-secondary" href="https://youtu.be/CRP1rMCoRxU" target="_blank">Demo video</a>
+      <a class="pill-link pill-secondary" href="https://kaggle.com/competitions/vibecoding-agents-capstone-project/writeups/doneho-plans-that-bend-so-you-dont-break" target="_blank">Kaggle writeup</a>
+    </div>
+    <p class="kaggle-note">Kaggle writeup = original submission. This page reflects iterations shipped since.</p>
+    <div class="status-strip"><span class="status-dot"></span>Live app · 20 deployed endpoints · built and shipped solo</div>
+  </div>
+
+  <div class="quote-block">
+    <p>"When life disrupts execution, the goal isn't finding the next empty slot — it's helping people maintain momentum toward what matters."</p>
+    <div class="attribution">5 years running an EdTech venture for India's toughest exam taught me this, the hard way.</div>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat-card"><div class="stat-num">15</div><div class="stat-label">Interviews, 6 segments</div></div>
+    <div class="stat-card"><div class="stat-num">52%</div><div class="stat-label">Sean Ellis PMF (40% benchmark)</div></div>
+    <div class="stat-card"><div class="stat-num">20</div><div class="stat-label">Live API endpoints</div></div>
+  </div>
+
+  <!-- 1. PROBLEM -->
+  <div class="section" id="problem">
+    <div class="section-head"><div class="section-num">1</div><h2>Voices from the research</h2></div>
+    <div class="section-sub">15 interviews · 6 segments — real disruptions, not assumptions.</div>
+    <div class="section-body">
+      <div class="quote-grid">
+        <div class="quote-card">
+          <div class="quote-card-head"><div class="avatar">👨‍💻</div><div><div class="quote-name">Arjun, 29</div><div class="quote-role">Software developer · Bengaluru</div></div></div>
+          <blockquote>"Driving to office, release doc still blank. Didn't think of it until I was at my desk."</blockquote>
+          <div class="pt-tag">→ Opportunity Map</div>
+        </div>
+        <div class="quote-card">
+          <div class="quote-card-head"><div class="avatar">👩‍🎓</div><div><div class="quote-name">Priya, 24</div><div class="quote-role">UPSC aspirant · Delhi</div></div></div>
+          <blockquote>"Cleared prelims. Failed mains. Mother was hospitalised during prep. The plan didn't account for life."</blockquote>
+          <div class="pt-tag">→ Reserve Hours · True loss</div>
+        </div>
+        <div class="quote-card">
+          <div class="quote-card-head"><div class="avatar">👨‍💼</div><div><div class="quote-name">Rahul, 34</div><div class="quote-role">Product manager · Delhi</div></div></div>
+          <blockquote>"3 days locked in Delhi — hartal. Came back to 14 overdue tasks, zero plan for any of them."</blockquote>
+          <div class="pt-tag">→ Reserve Hours · Emergency</div>
+        </div>
+        <div class="quote-card">
+          <div class="quote-card-head"><div class="avatar">👩‍👧</div><div><div class="quote-name">Meena, 31</div><div class="quote-role">Working mother · Bengaluru</div></div></div>
+          <blockquote>"Bought a robotic cleaner. Still pick everything off the floor first. Found a ₹149 fix while paying the EMI."</blockquote>
+          <div class="pt-tag">→ Smart Spend · Wrong trade-off</div>
+        </div>
+      </div>
+
+      <div class="subsection-title">What the research actually found</div>
+      <div class="pt-grid">
+        <div class="pt-card"><div class="pt-icon">🔀</div><div class="pt-head">Two modes of disruption</div><div class="pt-body">Planned = move a task. Emergency = people just forget. 8/15 hit this gap.</div></div>
+        <div class="pt-card"><div class="pt-icon">🔁</div><div class="pt-head">The compensation trap</div><div class="pt-body">50% tried adding more time to the same task when uncertain. Almost always failed.</div></div>
+        <div class="pt-card"><div class="pt-icon">🎯</div><div class="pt-head">No tool absorbs shocks</div><div class="pt-body">Motion, Todoist, ChatGPT — none maintain a hidden buffer before bothering the user.</div></div>
+        <div class="pt-card"><div class="pt-icon">🧍</div><div class="pt-head">A deliberate boundary</div><div class="pt-body">Taxi drivers/gig workers don't plan at all yet — named, not forgotten, not v1's user.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. CONTEXT -->
+  <div class="section" id="context">
+    <div class="section-head"><div class="section-num">2</div><h2>Who this is built for</h2></div>
+    <div class="section-body">
+      <div class="pt-grid cols-4">
+        <div class="pt-card"><div class="pt-icon">📚</div><div class="pt-head">UPSC aspirants</div></div>
+        <div class="pt-card"><div class="pt-icon">👩‍👧</div><div class="pt-head">Working mothers</div></div>
+        <div class="pt-card"><div class="pt-icon">🚕</div><div class="pt-head">Taxi drivers</div></div>
+        <div class="pt-card"><div class="pt-icon">💼</div><div class="pt-head">Gig workers</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- USER JOURNEY -->
+  <div class="section" id="journey">
+    <div class="section-head"><div class="section-num">3</div><h2>A real week inside DoneHo</h2></div>
+    <div class="section-body">
+      <div class="persona-banner">
+        <div class="persona-avatar">👩‍🎓</div>
+        <div>
+          <div class="persona-name">Priya — UPSC prep, a toddler, a demanding job</div>
+          <div class="persona-desc">Walking through the app exactly as it runs today</div>
+        </div>
+      </div>
+
+      <div class="journey-step">
+        <div class="journey-label">Step 1 — Goals &amp; LifeLoad</div>
+        <div class="journey-grid">
+          <div class="journey-card"><div class="jc-head">Reality</div><p>3 goals: UPSC, childcare, career. All real.</p></div>
+          <div class="journey-card"><div class="jc-head">Sees</div><p>LifeLoad <span class="highlight">78/100</span>. "Ease off a slider?" No leisure goal → burnout warning.</p></div>
+          <div class="journey-card"><div class="jc-head">Under the hood</div><p>Real formula, live — not a placeholder animation.</p></div>
+        </div>
+      </div>
+
+      <div class="journey-step">
+        <div class="journey-label">Step 2 — A disruption hits</div>
+        <div class="journey-grid">
+          <div class="journey-card"><div class="jc-head">Reality</div><p>Child spikes a fever. Logs "sick kid today."</p></div>
+          <div class="journey-card"><span class="real-badge">Built this session</span><div class="jc-head">Sees</div><p>"You were running ahead — this uses some of that lead." Gauge ticks. Correction option shown.</p></div>
+          <div class="journey-card"><div class="jc-head">Under the hood</div><p>Stage 0 estimates, Stage 1 checks Reserve. Fits — silently absorbed.</p></div>
+        </div>
+      </div>
+
+      <div class="journey-step">
+        <div class="journey-label">Step 3 — Refining a milestone</div>
+        <div class="journey-grid">
+          <div class="journey-card"><div class="jc-head">Reality</div><p>"Review NCERT Geography" — already covered it.</p></div>
+          <div class="journey-card"><div class="jc-head">Sees</div><p>Taps ✎, picks <strong>"Already done this"</strong> — no typing.</p></div>
+          <div class="journey-card"><div class="jc-head">Under the hood</div><p>Real Blueprint Agent regenerates against her actual remaining hours.</p></div>
+        </div>
+      </div>
+
+      <div class="journey-step">
+        <div class="journey-label">Step 4 — End of day</div>
+        <div class="journey-grid">
+          <div class="journey-card"><div class="jc-head">Reality</div><p>Fever + work — 2 milestones didn't happen.</p></div>
+          <div class="journey-card"><div class="jc-head">Sees</div><p>Day Output, pre-ticked done. Unticks the 2 that didn't happen. No guilt language.</p></div>
+          <div class="journey-card"><div class="jc-head">Under the hood</div><p>Feeds her real completion history — the same PRF that sets next week's plan.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ARCHITECTURE -->
+  <div class="section" id="architecture">
+    <div class="section-head"><div class="section-num">4</div><h2>Manual vs. AI workflow</h2></div>
+    <div class="section-body">
+      <div class="before-after">
+        <div class="ba-card ba-before"><div class="ba-label">Before</div><p>A missed task forces a full manual replan, or a guilt-laden streak break.</p></div>
+        <div class="ba-card ba-after"><div class="ba-label">Inside DoneHo</div><p>Zero-LLM engine calculates. Six narrow agents judge. Strictly separated.</p></div>
+      </div>
+      <img class="diagram-img" src="architecture-diagram.png" alt="DoneHo architecture overview">
+      <div class="diagram-caption">The vision, at a glance</div>
+      <img class="diagram-img" src="architecture-flowchart.png" alt="DoneHo detailed technical architecture">
+      <div class="diagram-caption">The actual system — real endpoints, real event flow, real ownership rules</div>
+
+      <div class="subsection-title">How DoneHo compares</div>
+      <div class="pt-grid">
+        <div class="pt-card"><div class="pt-icon">📅</div><div class="pt-head">Motion / Reclaim</div><div class="pt-body">Auto-scheduling — adjusts for meeting overlaps.</div></div>
+        <div class="pt-card"><div class="pt-icon">✅</div><div class="pt-head">Todoist / Notion</div><div class="pt-body">Task management, integrated knowledge base.</div></div>
+        <div class="pt-card"><div class="pt-icon">💬</div><div class="pt-head">ChatGPT / Claude</div><div class="pt-body">Fast conversational replanning, on demand.</div></div>
+        <div class="pt-card"><div class="pt-icon">🔥</div><div class="pt-head">Habitica / Streaks</div><div class="pt-body">Gamified streak tracking for routines.</div></div>
+      </div>
+      <div class="pt-card" style="margin-top:10px; background: linear-gradient(160deg, #6D5DFE22, var(--card) 70%);">
+        <div class="pt-icon">🛡️</div><div class="pt-head">DoneHo</div><div class="pt-body">Calculated-reserve-backed recalibration — survives emergencies without collapsing the plan.</div>
+      </div>
+      <p style="font-size:11px; color:var(--dim); font-style:italic; margin-top:8px;">Not better for everyone — built for the user other tools left behind.</p>
+
+      <div class="subsection-title">Why India first</div>
+      <div class="pt-grid">
+        <div class="pt-card"><div class="pt-icon">🇮🇳</div><div class="pt-head">Fastest path to real signal</div><div class="pt-body">15 interviews, 6 segments — grounded in real disruptions.</div></div>
+        <div class="pt-card"><div class="pt-icon">🧬</div><div class="pt-head">Cohort intelligence, not global averages</div><div class="pt-body">A 25-yr nurse in Mumbai ≠ a 50-yr nurse in London. Never assumed the same.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EVALUATION -->
+  <div class="section" id="evaluation">
+    <div class="section-head"><div class="section-num">5</div><h2>Evaluation method</h2></div>
+    <div class="section-sub">Component-by-component against a 7-part framework — live results, not a slide deck.</div>
+    <div class="section-body">
+      <div class="pt-grid cols-4">
+        <div class="pt-card"><div class="pt-icon">🧮</div><div class="pt-head">Deterministic</div><div class="pt-body">11/11, 5/5 passing.</div></div>
+        <div class="pt-card"><div class="pt-icon">🤖</div><div class="pt-head">AI agents</div><div class="pt-body">Repeated live Gemini runs.</div></div>
+        <div class="pt-card"><div class="pt-icon">🛡️</div><div class="pt-head">Guardrails</div><div class="pt-body">12+ messages, zero violations.</div></div>
+        <div class="pt-card"><div class="pt-icon">📄</div><div class="pt-head">Real output</div><div class="pt-body">Screens run locally.</div></div>
+      </div>
+      <div class="file-row">
+        <a class="file-link" href="DoneHo_Eval_Sheet_updated.xlsx" target="_blank">📊 Eval Sheet</a>
+        <a class="file-link" href="evals_screens.pdf" target="_blank">🖥️ Eval Screens</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAILURE MODES -->
+  <div class="section" id="failures">
+    <div class="section-head"><div class="section-num">6</div><h2>Failure modes</h2></div>
+    <div class="section-sub">6 real bugs surfaced through actual testing — every one disclosed, not just the flattering ones.</div>
+    <div class="section-body">
+      <div class="pt-grid">
+        <div class="finding-card finding-fixed"><div class="finding-tag">✓ Fixed</div><p>Aether Chat was fully non-functional — missing schema, missing method. Every call failed before reaching an LLM.</p></div>
+        <div class="finding-card finding-fixed"><div class="finding-tag">✓ Fixed</div><p>Hours input took the first number found, no unit-check. Rebuilt as tappable per-day options.</p></div>
+        <div class="finding-card finding-fixed"><div class="finding-tag">✓ Fixed</div><p>"Life Happened" silently failed without a same-day Day Output. Now auto-submits a full-miss day.</p></div>
+        <div class="finding-card finding-fixed"><div class="finding-tag">✓ Fixed</div><p>Search tool was optional per instructions — links often missing. Now mandatory for Smart Spend.</p></div>
+        <div class="finding-card finding-open"><div class="finding-tag">◐ Open decision</div><p>After 1 LifeLoad approval, Reserve marks fully used all week — even tiny disruptions need re-approval.</p></div>
+        <div class="pt-card"><div class="pt-icon">🔧</div><div class="pt-head">3 smaller fixes</div><div class="pt-body">A casing bug breaking every disruption report, a session-restore edge case, an overly open CORS setting.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GUARDRAILS -->
+  <div class="section" id="guardrails">
+    <div class="section-head"><div class="section-num">7</div><h2>Guardrails</h2></div>
+    <div class="section-body">
+      <div class="guardrail-grid">
+        <div class="guardrail-item"><span class="check">✓</span>Numbers never AI-generated — only framing is.</div>
+        <div class="guardrail-item"><span class="check">✓</span>Reserve buffer never named or quantified to the user.</div>
+        <div class="guardrail-item"><span class="check">✓</span>No medical, financial, or legal specifics.</div>
+        <div class="guardrail-item"><span class="check">✓</span>No suggestion reduces child supervision.</div>
+        <div class="guardrail-item"><span class="check">✓</span>Every number carries a one-line justification.</div>
+        <div class="guardrail-item"><span class="check">✓</span>Links only from real search results.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURE STATUS -->
+  <div class="section" id="status">
+    <div class="section-head"><div class="section-num">8</div><h2>What's actually live</h2></div>
+    <div class="section-sub">No rounding up — checked against the deployed code, not a claim.</div>
+    <div class="section-body">
+      <div class="pt-grid cols-4">
+        <div class="pt-card"><div class="pt-icon">✅</div><div class="pt-head">Onboarding</div><span class="badge badge-live">Live</span></div>
+        <div class="pt-card"><div class="pt-icon">✅</div><div class="pt-head">Disruptions</div><span class="badge badge-live">Live</span></div>
+        <div class="pt-card"><div class="pt-icon">✅</div><div class="pt-head">Day Output</div><span class="badge badge-live">Live</span></div>
+        <div class="pt-card"><div class="pt-icon">✅</div><div class="pt-head">Life Happened</div><span class="badge badge-live">Live</span></div>
+        <div class="pt-card"><div class="pt-icon">✅</div><div class="pt-head">Nudge suite</div><span class="badge badge-live">Live</span></div>
+        <div class="pt-card"><div class="pt-icon">✅</div><div class="pt-head">Aether Chat</div><span class="badge badge-live">Live</span></div>
+        <div class="pt-card"><div class="pt-icon">🟡</div><div class="pt-head">Onboarding chat</div><span class="badge badge-mock">Real AI, ungrounded</span></div>
+        <div class="pt-card"><div class="pt-icon">🟡</div><div class="pt-head">Trend / Snapshot</div><span class="badge badge-mock">Mock</span></div>
+      </div>
+      <div class="pt-grid" style="margin-top:10px;">
+        <div class="pt-card"><div class="pt-icon">📡</div><div class="pt-head">Render deploy logs</div><span class="badge badge-live">Live requests</span></div>
+        <div class="pt-card"><div class="pt-icon">🧪</div><div class="pt-head">TypeScript + Vite build</div><span class="badge badge-live">Passed</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- METRICS -->
+  <div class="section" id="metrics">
+    <div class="section-head"><div class="section-num">9</div><h2>Business &amp; user metrics</h2></div>
+    <div class="section-body">
+      <div class="pt-grid">
+        <div class="pt-card"><div class="pt-icon">📈</div><div class="pt-head">52% PMF</div><div class="pt-body">Sean Ellis score vs. 40% benchmark.</div></div>
+        <div class="pt-card"><div class="pt-icon">⭐</div><div class="pt-head">North Star</div><div class="pt-body">Monthly Goal Survival Rate.</div></div>
+        <div class="pt-card"><div class="pt-icon">🎯</div><div class="pt-head">Trust Metric</div><div class="pt-body">Reserve Accuracy Rate — how often the buffer protected the plan.</div></div>
+      </div>
+      <div class="subsection-title">M3 targets</div>
+      <div class="pt-grid cols-4">
+        <div class="pt-card"><div class="pt-icon">🚀</div><div class="pt-head">Activation</div><div class="pt-body">Onboarding → Blueprint</div><span class="badge badge-next">70%</span></div>
+        <div class="pt-card"><div class="pt-icon">🔁</div><div class="pt-head">Retention</div><div class="pt-body">Return after Recalibration</div><span class="badge badge-next">65%</span></div>
+        <div class="pt-card"><div class="pt-icon">💰</div><div class="pt-head">Revenue</div><div class="pt-body">Smart Spend click-through</div><span class="badge badge-next">15%</span></div>
+        <div class="pt-card"><div class="pt-icon">📣</div><div class="pt-head">Growth</div><div class="pt-body">Referral K-Factor</div><span class="badge badge-next">&gt;1.0</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCOPE -->
+  <div class="section" id="scope">
+    <div class="section-head"><div class="section-num">10</div><h2>What I didn't build, on purpose</h2></div>
+    <div class="section-body">
+      <div class="pt-grid">
+        <div class="pt-card"><div class="pt-icon">🎮</div><div class="pt-head">No streaks/gamification</div><div class="pt-body">A missed day shouldn't feel like a loss.</div></div>
+        <div class="pt-card"><div class="pt-icon">👥</div><div class="pt-head">No cross-user learning yet</div><div class="pt-body">DoneHo learns you first.</div></div>
+        <div class="pt-card"><div class="pt-icon">📅</div><div class="pt-head">No calendar sync yet</div><div class="pt-body">Trust had to come first.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROADMAP -->
+  <div class="section" id="roadmap">
+    <div class="section-head"><div class="section-num">11</div><h2>Roadmap</h2></div>
+    <div class="section-body">
+      <div class="pt-grid cols-4">
+        <div class="pt-card"><span class="badge badge-live">Live</span><div class="pt-head">Engine + 6 Agents</div></div>
+        <div class="pt-card"><span class="badge badge-live">Live</span><div class="pt-head">Recovery Pipeline</div></div>
+        <div class="pt-card"><span class="badge badge-live">Live</span><div class="pt-head">Nudge suite</div></div>
+        <div class="pt-card"><span class="badge badge-next">Next</span><div class="pt-head">Full onboarding chat</div></div>
+        <div class="pt-card"><span class="badge badge-next">Next</span><div class="pt-head">Multi-week trends</div></div>
+        <div class="pt-card"><span class="badge badge-next">Next</span><div class="pt-head">Calendar sync</div></div>
+        <div class="pt-card"><span class="badge badge-next">Next</span><div class="pt-head">Hindi / Tamil / Telugu</div></div>
+        <div class="pt-card"><span class="badge badge-future">Future</span><div class="pt-head">Cohort Intelligence Engine</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHAT I LEARNED -->
+  <div class="section" id="learned">
+    <div class="section-head"><div class="section-num">12</div><h2>What I learned</h2></div>
+    <div class="section-body">
+      <div class="pt-grid">
+        <div class="pt-card"><div class="pt-icon">⚡</div><div class="pt-head">Action, not explanation</div><div class="pt-body">Life Happened became a single tap — no classifying.</div></div>
+        <div class="pt-card"><div class="pt-icon">⏱️</div><div class="pt-head">Time &gt; tasks</div><div class="pt-body">Smart Spend beat task-management on engagement.</div></div>
+        <div class="pt-card"><div class="pt-icon">🧮</div><div class="pt-head">Trust = math, not words</div><div class="pt-body">Reserve Hours beat comforting language every time.</div></div>
+        <div class="pt-card"><div class="pt-icon">🤝</div><div class="pt-head">Build honestly</div><div class="pt-body">3 things stay simulated because the data doesn't exist yet.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WAR ROOM -->
+  <div class="section" id="warroom">
+    <div class="section-head"><div class="section-num">13</div><h2>Validated before a line of code</h2></div>
+    <div class="section-sub">5 AI-simulated stakeholder reviews. All roles played by Claude, disclosed plainly.</div>
+    <div class="section-body">
+      <div class="warroom-grid">
+        <div class="warroom-card"><div class="warroom-role">🧑‍💼 PM</div><div class="warroom-quote">Prioritized the smallest valuable thing to ship first.</div></div>
+        <div class="warroom-card"><div class="warroom-role">👨‍💻 Engineer</div><div class="warroom-quote">Validated deterministic math over AI-guessed numbers.</div></div>
+        <div class="warroom-card"><div class="warroom-role">🎨 Designer</div><div class="warroom-quote">Made disruption recovery feel reassuring, not stressful.</div></div>
+        <div class="warroom-card"><div class="warroom-role">📊 Analyst</div><div class="warroom-quote">Flagged Reserve Hours as the strongest retention lever.</div></div>
+        <div class="warroom-card"><div class="warroom-role">🧭 Director</div><div class="warroom-quote">Kept the full vision while sequencing delivery realistically.</div></div>
+      </div>
+      <div class="warroom-note">Every decision pressure-tested before a single line of code.</div>
+    </div>
+  </div>
+
+  <!-- FEEDBACK -->
+  <div class="section" id="feedback">
+    <div class="section-head"><div class="section-num">14</div><h2>Real user feedback</h2></div>
+    <div class="section-body">
+      <div class="pt-card"><div class="pt-icon">📡</div><div class="pt-head">PostHog is live</div><div class="pt-body">Tracking real sessions. Results to follow once there's enough to report.</div></div>
+    </div>
+  </div>
+
+  <footer>
+    Built solo — architecture, backend, frontend integration, evaluation, end-to-end.<br>
+    <a href="https://github.com/thasli-dot/doneho-backend_v2" target="_blank">GitHub</a> · <a href="https://donehov2.lovable.app/" target="_blank">Live app</a>
+  </footer>
+</div>
+
+</body>
+</html>
