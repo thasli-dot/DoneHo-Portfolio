@@ -45,6 +45,7 @@
   .pill-secondary { background: var(--card); color: var(--text); border: 1px solid var(--border); }
   .kaggle-note { font-size: 15px; color: var(--dim); font-style: italic; margin-top: 8px; }
   .status-strip { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 20px; font-size: 15.5px; color: var(--dim); }
+  .hero-illustration { max-width: 420px; width: 100%; height: auto; display: block; margin: 34px auto 0; border-radius: 20px; }
   .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); }
 
   /* QUOTE */
@@ -236,10 +237,11 @@
     </div>
     <p class="kaggle-note">Kaggle writeup = original submission. This page reflects iterations shipped since.</p>
     <div class="status-strip"><span class="status-dot"></span>Live app · 20 deployed endpoints · built and shipped solo</div>
+    <img class="hero-illustration" src="hero-illustration.png" alt="Illustration of a winding path past a 'Life Happens' roadblock, showing DoneHo's flow: understand context, retrieve relevant patterns, replan intelligently, execute with clarity, adapt and keep moving forward">
   </div>
 
   <div class="quote-block">
-    <p>"When life disrupts execution, the goal isn't finding the next empty slot — it's helping people maintain momentum towards what matters."</p>
+    <p>"The problem was never your discipline. It was the plan that expected a perfect week."</p>
     <div class="attribution">Five years inside one of India's toughest exams — three spent understanding the problem as an educator, two spent solving it as a founder — taught me this, the hard way.</div>
   </div>
 
@@ -292,16 +294,7 @@
     <div class="section-head"><div class="section-num">1.5</div><h2>Zero to one — the real path</h2></div>
     <div class="section-sub">Every iteration driven by real user feedback, not a pre-set plan.</div>
     <div class="section-body">
-      <div class="timeline">
-        <div class="tl-step"><div class="tl-dot">🎨</div><div class="tl-head">Figma prototype</div><div class="tl-body">Real pain point, validated through user research.</div></div>
-        <div class="tl-step"><div class="tl-dot">🧪</div><div class="tl-head">No-backend build (Lovable)</div><div class="tl-body">Shipped fast to test if the idea resonated at all.</div></div>
-        <div class="tl-step tl-flaw"><div class="tl-dot">⚠️</div><div class="tl-head">Real flaws surfaced</div><div class="tl-body">Random AI reasoning, zero guardrails — e.g. pairing "Learn Python" with "chop vegetables."</div></div>
-        <div class="tl-step"><div class="tl-dot">⚙️</div><div class="tl-head">Real backend, deployed</div><div class="tl-body">FastAPI + Google ADK, live on Render.</div></div>
-        <div class="tl-step"><div class="tl-dot">🐛</div><div class="tl-head">Debugged from real usage</div><div class="tl-body">Latency + broken features, found via logs and live testing.</div></div>
-        <div class="tl-step"><div class="tl-dot">🌱</div><div class="tl-head">Taught the AI real patterns</div><div class="tl-body">Real examples from my life + experts (<code>seed_patterns.py</code>) — smarter, sensible suggestions.</div></div>
-        <div class="tl-step"><div class="tl-dot">🔎</div><div class="tl-head">Real retrieval, not one fixed block</div><div class="tl-body">Curated patterns moved into Supabase pgvector (Gemini embeddings) — retrieved per-request based on the actual goal, instead of the same static block every time.</div></div>
-        <div class="tl-step"><div class="tl-dot">🚀</div><div class="tl-head">This version</div><div class="tl-body">Smarter and more disciplined, shaped by that real feedback loop.</div></div>
-      </div>
+      <img src="build-journey-timeline.png" alt="Build journey timeline: Figma prototype, no-backend build, real flaws surfaced, real backend deployed, debugged from real usage, taught the AI real patterns, real retrieval via RAG, this version" style="width:100%; height:auto; border-radius:20px; display:block;">
     </div>
   </div>
 
@@ -325,6 +318,13 @@
   <div class="section" id="whatisdoneho">
     <div class="section-head"><div class="section-num">2.5</div><h2>What is DoneHo, in plain terms</h2></div>
     <div class="section-body">
+      <div class="subsection-title">Product philosophy</div>
+      <div class="pt-grid">
+        <div class="pt-card"><div class="pt-icon">🌱</div><div class="pt-head">Adapt, don't restart</div><div class="pt-body">Plans evolve with changing circumstances instead of forcing users to begin again.</div></div>
+        <div class="pt-card"><div class="pt-icon">⚖️</div><div class="pt-head">Protect progress</div><div class="pt-body">The goal isn't perfect execution — it's maintaining meaningful forward momentum.</div></div>
+        <div class="pt-card"><div class="pt-icon">🤖</div><div class="pt-head">AI reasons, deterministic logic calculates</div><div class="pt-body">Critical values stay consistent, explainable, and predictable — AI never touches the math.</div></div>
+      </div>
+
       <div class="subsection-title">The core loop</div>
       <div class="loop-wrap">
         <div class="loop-card" style="grid-area:bp;"><div class="loop-icon">📋</div><div class="loop-head">Blueprint</div><div class="loop-body">Goals become real milestones</div></div>
@@ -488,7 +488,9 @@
       <div class="pt-card" style="margin-top:10px; background: linear-gradient(160deg, #6D5DFE22, var(--card) 70%);">
         <div class="pt-icon">🛡️</div><div class="pt-head">DoneHo</div><div class="pt-body">Calculated-reserve-backed recalibration — survives emergencies without collapsing the plan.</div>
       </div>
-      <p style="font-size: 15px; color:var(--dim); font-style:italic; margin-top:8px;">Not better for everyone — built for the user other tools left behind.</p>
+      <div class="quote-block" style="margin-top:24px;">
+        <p>"Not better for everyone — built for the user other tools left behind."</p>
+      </div>
 
       <div class="subsection-title">Why India first</div>
       <div class="pt-grid">
@@ -585,6 +587,12 @@
         <div class="pt-card"><div class="pt-icon">💰</div><div class="pt-head">Revenue</div><div class="pt-body">Smart Spend click-through</div><span class="badge badge-next">15%</span></div>
         <div class="pt-card"><div class="pt-icon">📣</div><div class="pt-head">Growth</div><div class="pt-body">Referral K-Factor</div><span class="badge badge-next">&gt;1.0</span></div>
       </div>
+      <div class="subsection-title">Also tracked</div>
+      <div class="pt-grid">
+        <div class="pt-card"><div class="pt-icon">🧩</div><div class="pt-head">Blueprint Completion Rate</div><div class="pt-body">Shows if the planning experience is intuitive.</div></div>
+        <div class="pt-card"><div class="pt-icon">🔧</div><div class="pt-head">Feature Adoption</div><div class="pt-body">Identifies which capabilities actually drive engagement.</div></div>
+        <div class="pt-card"><div class="pt-icon">😊</div><div class="pt-head">NPS</div><div class="pt-body">Captures overall user satisfaction.</div></div>
+      </div>
     </div>
   </div>
 
@@ -643,6 +651,10 @@
         <div class="pt-card"><div class="pt-icon">⏱️</div><div class="pt-head">Time &gt; tasks</div><div class="pt-body">Smart Spend beat task-management on engagement.</div></div>
         <div class="pt-card"><div class="pt-icon">🧮</div><div class="pt-head">Trust = math, not words</div><div class="pt-body">Reserve Hours beat comforting language every time.</div></div>
         <div class="pt-card"><div class="pt-icon">🤝</div><div class="pt-head">Build honestly</div><div class="pt-body">3 things stay simulated because the data doesn't exist yet.</div></div>
+      </div>
+      <div class="quote-block" style="margin-top:24px;">
+        <p>Building DoneHo taught me that successful AI products aren't defined by the sophistication of their models, but by how effectively they solve real user problems.</p>
+        <div class="attribution">Balancing user research, product strategy, system design, experimentation, and technical implementation — great product management is designing systems that stay valuable even when reality doesn't go as planned.</div>
       </div>
     </div>
   </div>
